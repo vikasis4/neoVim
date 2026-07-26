@@ -1,4 +1,19 @@
 local keymap = vim.keymap
+
+vim.keymap.set("i", "<Tab>", function()
+    local suggestion = require("supermaven-nvim.completion_preview")
+
+    if suggestion.has_suggestion() then
+        suggestion.on_accept_suggestion()
+    else
+        vim.api.nvim_feedkeys(
+            vim.api.nvim_replace_termcodes("<Tab>", true, false, true),
+            "n",
+            false
+        )
+    end
+end, { desc = "Accept Supermaven Suggestion" })
+
 local builtin = require("telescope.builtin")
 
 
@@ -18,40 +33,58 @@ vim.keymap.set("n", "<C-a>", ":%y")
 -- LSP
 -----------------------------------------------------------
 
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to Definition" })
+local tb = require("telescope.builtin")
+
+vim.keymap.set("n", "gd", tb.lsp_definitions, { desc = "Go to Definition" })
 
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to Declaration" })
 
-vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "References" })
+vim.keymap.set("n", "gi", tb.lsp_implementations, { desc = "Go to Implementation" })
 
-vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Implementation" })
+vim.keymap.set("n", "gr", tb.lsp_references, { desc = "References" })
 
-vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
+vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
 
-vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename" })
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename Symbol" })
 
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
 
-vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Diagnostics" })
+vim.keymap.set("n", "<leader>ds", tb.lsp_document_symbols, { desc = "Document Symbols" })
+
+vim.keymap.set("n", "<leader>ws", tb.lsp_workspace_symbols, { desc = "Workspace Symbols" })
+
+vim.keymap.set("n", "<leader>D", tb.diagnostics, { desc = "Diagnostics" })
+
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
 
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous Diagnostic" })
 
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
+-----------------------------------------------------------
+-- LazyGit
+-----------------------------------------------------------
+
+vim.keymap.set(
+    "n",
+    "<leader>gg",
+    "<cmd>LazyGit<CR>",
+    { desc = "Open LazyGit" }
+)
+-----------------------------------------------------------
+-- Formatting
+-----------------------------------------------------------
+
+vim.keymap.set("n", "<leader>f", function()
+    require("conform").format({
+        async = true,
+        lsp_fallback = true,
+    })
+end, { desc = "Format File" })
 -----------------------------------------------------------
 -- Leader
 -----------------------------------------------------------
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
------------------------------------------------------------
--- Better window movement
------------------------------------------------------------
-
-keymap.set("n", "<C-h>", "<C-w>h")
-keymap.set("n", "<C-j>", "<C-w>j")
-keymap.set("n", "<C-k>", "<C-w>k")
-keymap.set("n", "<C-l>", "<C-w>l")
 
 -----------------------------------------------------------
 -- Resize windows
