@@ -1,0 +1,129 @@
+==================================================
+SYSTEM
+==================================================
+Sun Jul 26 01:56:14 PM IST 2026
+Linux GFPO-2000337 7.0.0-14-generic #14-Ubuntu SMP PREEMPT_DYNAMIC Mon Apr 13 11:09:53 UTC 2026 x86_64 GNU/Linux
+
+OS
+PRETTY_NAME="Ubuntu 26.04 LTS"
+NAME="Ubuntu"
+VERSION_ID="26.04"
+VERSION="26.04 LTS (Resolute Raccoon)"
+VERSION_CODENAME=resolute
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=resolute
+LOGO=ubuntu-logo
+
+==================================================
+NEOVIM
+==================================================
+/usr/bin/nvim
+NVIM v0.11.6
+Build type: Release
+LuaJIT 2.1.1761786044
+Run "nvim -V1 -v" for more info
+
+==================================================
+LAZY PLUGINS
+==================================================
+LuaSnip
+avante.nvim
+bufferline.nvim
+cmp-buffer
+cmp-nvim-lsp
+cmp-path
+cmp_luasnip
+codecompanion.nvim
+conform.nvim
+dressing.nvim
+indent-blankline.nvim
+lazy.nvim
+lspkind.nvim
+lualine.nvim
+mason-lspconfig.nvim
+mason.nvim
+neo-tree.nvim
+nui.nvim
+nvim-cmp
+nvim-lspconfig
+nvim-treesitter
+nvim-web-devicons
+plenary.nvim
+supermaven-nvim
+telescope.nvim
+tokyonight.nvim
+vim-tmux-navigator
+which-key.nvim
+
+==================================================
+AVANTE GIT
+==================================================
+b57b7d8e601ec6c7675c67de40cc7f5f0c0d40d0
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+
+==================================================
+INIT.LUA
+==================================================
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+require("config.options")
+require("config.lazy")
+require("config.keymaps")
+require("config.autocmds")
+
+==================================================
+AVANTE CONFIG
+==================================================
+return {
+    "yetone/avante.nvim",
+    lazy = false,
+    version = false,
+    build = "make",
+
+    dependencies = {
+        "stevearc/dressing.nvim",
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+        "nvim-tree/nvim-web-devicons",
+    },
+
+    opts = {
+        provider = "ollama",
+
+        providers = {
+            ollama = {
+                endpoint = "http://127.0.0.1:11434",
+                model = "qwen2.5-coder:7b",
+
+            },
+        },
+    },
+}
+
+==================================================
+OLLAMA
+==================================================
+/usr/local/bin/ollama
+ollama version is 0.32.4
+NAME                ID              SIZE      MODIFIED       
+qwen2.5-coder:7b    dae161e27b0e    4.7 GB    44 minutes ago    
+NAME                ID              SIZE      PROCESSOR    CONTEXT    UNTIL              
+qwen2.5-coder:7b    dae161e27b0e    6.2 GB    100% CPU     20480      4 minutes from now    
+
+==================================================
+OLLAMA API TAGS
+==================================================
+{"models":[{"name":"qwen2.5-coder:7b","model":"qwen2.5-coder:7b","modified_at":"2026-07-26T13:11:29.476584164+05:30","size":4683087561,"digest":"dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364","details":{"parent_model":"","format":"gguf","family":"qwen2","families":["qwen2"],"parameter_size":"7.6B","quantization_level":"Q4_K_M","context_length":32768,"embedding_length":3584},"capabilities":["completion","tools","insert"]}]}
+
+==================================================
+OLLAMA CHAT TEST
+==================================================
