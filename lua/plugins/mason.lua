@@ -10,6 +10,8 @@ return {
             ensure_installed = {
                 "pyright",
                 "lua_ls",
+                "ts_ls",
+                "eslint",
             },
         },
     },

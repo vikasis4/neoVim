@@ -6,13 +6,29 @@ return {
 
         opts = {
             formatters_by_ft = {
-                python = { "ruff_format" },
+                python = { "ruff_organize_imports", "ruff_format" },
                 lua = { "stylua" },
+
+                -- TypeScript / web. prettierd is much faster; prettier is the
+                -- fallback when prettierd isn't installed.
+                javascript = { "prettierd", "prettier", stop_after_first = true },
+                javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+                typescript = { "prettierd", "prettier", stop_after_first = true },
+                typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+
+                json = { "prettierd", "prettier", stop_after_first = true },
+                jsonc = { "prettierd", "prettier", stop_after_first = true },
+                yaml = { "prettierd", "prettier", stop_after_first = true },
+                html = { "prettierd", "prettier", stop_after_first = true },
+                css = { "prettierd", "prettier", stop_after_first = true },
+                scss = { "prettierd", "prettier", stop_after_first = true },
+                graphql = { "prettierd", "prettier", stop_after_first = true },
+                markdown = { "prettierd", "prettier", stop_after_first = true },
             },
 
             format_on_save = {
-                timeout_ms = 500,
-                lsp_fallback = true,
+                timeout_ms = 2000,
+                lsp_format = "fallback",
             },
         },
     },

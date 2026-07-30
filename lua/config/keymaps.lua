@@ -1,90 +1,69 @@
 local keymap = vim.keymap
 
-vim.keymap.set("i", "<Tab>", function()
-    local suggestion = require("supermaven-nvim.completion_preview")
+-----------------------------------------------------------
+-- Telescope
+-----------------------------------------------------------
 
-    if suggestion.has_suggestion() then
-        suggestion.on_accept_suggestion()
-    else
-        vim.api.nvim_feedkeys(
-            vim.api.nvim_replace_termcodes("<Tab>", true, false, true),
-            "n",
-            false
-        )
-    end
-end, { desc = "Accept Supermaven Suggestion" })
+keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Find Files" })
 
-local builtin = require("telescope.builtin")
+keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "Live Grep" })
 
+keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "Buffers" })
 
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find Files" })
+keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Help Tags" })
 
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep" })
+keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<CR>", { desc = "Recent Files" })
 
-vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
-
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help Tags" })
-
-vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent Files" })
-
-vim.keymap.set("n", "<C-a>", ":%y")
+keymap.set("n", "<C-a>", ":%y<CR>", { desc = "Yank Whole Buffer" })
 
 -----------------------------------------------------------
 -- LSP
 -----------------------------------------------------------
 
-local tb = require("telescope.builtin")
+keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", { desc = "Go to Definition" })
 
-vim.keymap.set("n", "gd", tb.lsp_definitions, { desc = "Go to Definition" })
+keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to Declaration" })
 
-vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to Declaration" })
+keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", { desc = "Go to Implementation" })
 
-vim.keymap.set("n", "gi", tb.lsp_implementations, { desc = "Go to Implementation" })
+keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", { desc = "References" })
 
-vim.keymap.set("n", "gr", tb.lsp_references, { desc = "References" })
+keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
 
-vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
+keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename Symbol" })
 
-vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename Symbol" })
+keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
 
-vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
+keymap.set("n", "<leader>ds", "<cmd>Telescope lsp_document_symbols<CR>", { desc = "Document Symbols" })
 
-vim.keymap.set("n", "<leader>ds", tb.lsp_document_symbols, { desc = "Document Symbols" })
+keymap.set("n", "<leader>ws", "<cmd>Telescope lsp_workspace_symbols<CR>", { desc = "Workspace Symbols" })
 
-vim.keymap.set("n", "<leader>ws", tb.lsp_workspace_symbols, { desc = "Workspace Symbols" })
+keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics<CR>", { desc = "Diagnostics" })
 
-vim.keymap.set("n", "<leader>D", tb.diagnostics, { desc = "Diagnostics" })
+keymap.set("n", "]d", function()
+    vim.diagnostic.jump({ count = 1, float = true })
+end, { desc = "Next Diagnostic" })
 
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
-
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous Diagnostic" })
+keymap.set("n", "[d", function()
+    vim.diagnostic.jump({ count = -1, float = true })
+end, { desc = "Previous Diagnostic" })
 
 -----------------------------------------------------------
 -- LazyGit
 -----------------------------------------------------------
 
-vim.keymap.set(
-    "n",
-    "<leader>gg",
-    "<cmd>LazyGit<CR>",
-    { desc = "Open LazyGit" }
-)
+keymap.set("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "Open LazyGit" })
+
 -----------------------------------------------------------
 -- Formatting
 -----------------------------------------------------------
 
-vim.keymap.set("n", "<leader>f", function()
+keymap.set("n", "<leader>cf", function()
     require("conform").format({
         async = true,
         lsp_fallback = true,
     })
 end, { desc = "Format File" })
------------------------------------------------------------
--- Leader
------------------------------------------------------------
-
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
 
 -----------------------------------------------------------
 -- Resize windows
@@ -116,19 +95,11 @@ keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 -----------------------------------------------------------
--- Save
+-- Save / Quit
 -----------------------------------------------------------
 
-keymap.set("n", "<leader>w", ":w<CR>")
+keymap.set("n", "<leader>w", ":w<CR>", { desc = "Save" })
 
------------------------------------------------------------
--- Quit
------------------------------------------------------------
+keymap.set("n", "<leader>q", ":q<CR>", { desc = "Quit" })
 
-keymap.set("n", "<leader>q", ":q<CR>")
-
------------------------------------------------------------
--- Save & Quit
------------------------------------------------------------
-
-keymap.set("n", "<leader>x", ":x<CR>")
+keymap.set("n", "<leader>x", ":x<CR>", { desc = "Save & Quit" })
